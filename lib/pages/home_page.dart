@@ -36,6 +36,23 @@ class _HomePageState extends State<HomePage> {
                   height: 14.0,
                 ),
                 Container(
+                  padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      const BoxShadow(
+                        color: Colors.white,
+                        offset: const Offset(5, -5),
+                        blurRadius: 10.0,
+                      ),
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        offset: const Offset(4, 4),
+                        blurRadius: 12.0,
+                      ),
+                    ],
+                  ),
                   child: Column(
                     children: [
                       Row(
