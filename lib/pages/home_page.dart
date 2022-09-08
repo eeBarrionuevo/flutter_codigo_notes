@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                     fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.bold,
                                     color: Color(0xff323334).withOpacity(0.90),
                                   ),
                                 ),
@@ -78,7 +78,38 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ],
                       ),
-                      Divider(),
+                      const SizedBox(
+                        height: 6.0,
+                      ),
+                      Divider(
+                        indent: 12.0,
+                        endIndent: 12.0,
+                      ),
+                      const SizedBox(
+                        height: 6.0,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.network(
+                          "https://images.pexels.com/photos/12315477/pexels-photo-12315477.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          height: 1.5,
+                          fontWeight: FontWeight.normal,
+                          color: Color(0xff323334).withOpacity(0.90),
+                        ),
+                      ),
                     ],
                   ),
                 ),
