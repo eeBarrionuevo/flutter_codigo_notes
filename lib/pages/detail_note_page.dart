@@ -11,15 +11,17 @@ class _DetailNotePageState extends State<DetailNotePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.landscapeLeft],
-    );
+    print("INIT");
+    // SystemChrome.setPreferredOrientations(
+    //   [DeviceOrientation.landscapeLeft],
+    // );
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    print("DISPOSE");
     SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp],
     );
@@ -27,6 +29,7 @@ class _DetailNotePageState extends State<DetailNotePage> {
 
   @override
   Widget build(BuildContext context) {
+    print("BUILD");
     return Scaffold(
       body: Center(
         child: Text("Detail"),
