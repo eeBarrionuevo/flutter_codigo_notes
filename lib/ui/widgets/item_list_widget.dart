@@ -1,9 +1,12 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:notes/models/note_model.dart';
 
 class ItemListWidget extends StatelessWidget {
-  const ItemListWidget({Key? key}) : super(key: key);
+
+  NoteModel noteModel;
+  ItemListWidget({required this.noteModel});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,7 @@ class ItemListWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+                      noteModel.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -57,7 +60,7 @@ class ItemListWidget extends StatelessWidget {
                       height: 4.0,
                     ),
                     Text(
-                      "25 de Sep, 2:42 PM",
+                      "${noteModel.date}, ${noteModel.time}",
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         color: Color(0xff323334).withOpacity(0.85),
@@ -81,7 +84,7 @@ class ItemListWidget extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
-              "https://images.pexels.com/photos/12315477/pexels-photo-12315477.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+              noteModel.image,
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -91,7 +94,7 @@ class ItemListWidget extends StatelessWidget {
             height: 10.0,
           ),
           Text(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            noteModel.description,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(

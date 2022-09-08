@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:notes/models/note_model.dart';
 import 'package:notes/pages/detail_note_page.dart';
 import 'package:notes/ui/widgets/item_list_widget.dart';
 
@@ -84,12 +85,26 @@ class _HomePageState extends State<HomePage> {
                   builder: (BuildContext context, AsyncSnapshot snap){
                     if(snap.hasData){
                       QuerySnapshot collection = snap.data;
+                      List<QueryDocumentSnapshot> docs = collection.docs;
+                      List<NoteModel> notes = docs.map((e){
+
+                        print(e);
+                        print(e.id);
+                        print(e.data());
+                        print(e.data() as Map<String, dynamic>);
+
+                        NoteModel noteModel = NoteModel.fromJson(e.data() as Map<String, dynamic>);
+                        noteModel.id  = e.id;
+                        return noteModel;
+                      }).toList();
                       return ListView.builder(
                         shrinkWrap: true,
                         physics: const ScrollPhysics(),
-                        itemCount: collection.docs.length,
+                        itemCount: notes.length,
                         itemBuilder: (context, index){
-                          return ItemListWidget();
+                          return ItemListWidget(
+                            noteModel: notes[index],
+                          );
                         },
                       );
                     }
