@@ -34,7 +34,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: const Color(0xffF9FDFF),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailNotePage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailNotePage())).then((value){
+            // setState((){});
+          });
         },
         child: Icon(Icons.add),
       ),
@@ -58,10 +60,44 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 14.0,
                 ),
-                ItemListWidget(),
-                ItemListWidget(),
-                ItemListWidget(),
-                ItemListWidget(),
+
+                // FutureBuilder(
+                //   future: _notesReference.get(),
+                //   builder: (BuildContext context, AsyncSnapshot snap){
+                //     if(snap.hasData){
+                //       QuerySnapshot collection = snap.data;
+                //       return ListView.builder(
+                //         shrinkWrap: true,
+                //         physics: const ScrollPhysics(),
+                //         itemCount: collection.docs.length,
+                //         itemBuilder: (context, index){
+                //           return ItemListWidget();
+                //         },
+                //       );
+                //     }
+                //     return Text("Hola");
+                //   },
+                // ),
+
+                StreamBuilder(
+                  stream: _notesReference.snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot snap){
+                    if(snap.hasData){
+                      QuerySnapshot collection = snap.data;
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemCount: collection.docs.length,
+                        itemBuilder: (context, index){
+                          return ItemListWidget();
+                        },
+                      );
+                    }
+                    return Text("Hola");
+                  },
+                ),
+
+
               ],
             ),
           ),
