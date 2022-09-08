@@ -11,33 +11,33 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-
     Orientation orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
+      backgroundColor: Color(0xffF9FDFF),
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Column(
-            children: [
-              GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
-                children: [
-                  Container(
-                    color: Colors.red,
-                  ),
-                  Container(
-                    color: Colors.indigo,
-                  ),
-                  Container(
-                    color: Colors.yellow,
-                  ),
-                  Container(
-                    color: Colors.greenAccent,
-                  )
-                ],
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Column(
+              children: [
+                Row(
+                  children: const [
+                    Text(
+                      "Mis notas",
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 14.0,
+                ),
+
+              ],
+            ),
           ),
         ),
       ),
