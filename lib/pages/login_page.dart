@@ -13,36 +13,65 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-  final CollectionReference _userReference = FirebaseFirestore.instance.collection('users');
+  final CollectionReference _userReference =
+      FirebaseFirestore.instance.collection('users');
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   _registerUser() async {
-    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: "mandarina@gmail.com",
-      password: "3volution",
+    UserCredential userCredential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
     );
-
-    if(userCredential.user != null){
-
+    if (userCredential.user != null) {
       Map<String, dynamic> userMap = {
-        "name": "Elvis Barrionuevo",
+        "name": "Luis Montes",
         "email": _emailController.text,
         "status": true,
         "role": "user",
       };
-
-      _userReference.add(userMap).then((value){
+      _userReference.add(userMap).then((value) {
         print(value);
       });
+    }
+  }
+
+  _login() async {
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    if(userCredential.user != null){
+      // print(userCredential.user!.email);
+      Map<String, dynamic> userData =  await getUser(userCredential.user!.email!);
+      if(userData["role"] == "admin"){
+
+      }else if(userData["role"] == "user"){
+
+      }else{
+
+      }
     }
 
   }
 
+  Future<Map<String, dynamic>> getUser(String email) async{
+    QuerySnapshot collection = await _userReference.where("email", isEqualTo: email).get();
+    QueryDocumentSnapshot doc = collection.docs.first;
+    Map<String, dynamic> userMap = doc.data() as Map<String, dynamic>;
+    return userMap;
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
       backgroundColor: kBackgroundPrimaryColor,
       body: SingleChildScrollView(
@@ -78,7 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ButtonNormalWidget(
                   text: "Iniciar Sesión",
-                  onPressed: () {},
+                  onPressed: () {
+                    _login();
+                  },
                 ),
                 const SizedBox(
                   height: 30.0,
