@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notes/ui/general/colors.dart';
+import 'package:notes/ui/widgets/textfield_normal_widget.dart';
 
 class DetailNotePage extends StatefulWidget {
   @override
@@ -42,39 +43,11 @@ class _DetailNotePageState extends State<DetailNotePage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Text("Título",),
-              const SizedBox(
-                height: 6.0,
+              TextFieldNormalWidget(
+                hintText: "Título",
               ),
-              Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black87.withOpacity(0.05),
-                      blurRadius: 12,
-                      offset: const Offset(4, 4),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Título",
-                    hintStyle: TextStyle(
-                        fontSize: 14.0,
-                        color: kFontPrimaryColor.withOpacity(0.5)
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14.0),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
+              TextFieldNormalWidget(
+                hintText: "Descripción",
               ),
             ],
           ),
