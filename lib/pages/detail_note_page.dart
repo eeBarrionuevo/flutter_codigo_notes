@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:notes/models/note_model.dart';
 import 'package:notes/ui/general/colors.dart';
 import 'package:notes/ui/widgets/button_normal_widget.dart';
 import 'package:notes/ui/widgets/textfield_normal_widget.dart';
@@ -13,6 +15,9 @@ class DetailNotePage extends StatefulWidget {
 }
 
 class _DetailNotePageState extends State<DetailNotePage> {
+  final CollectionReference _noteReference =
+      FirebaseFirestore.instance.collection("notes");
+
   final ImagePicker _imagePicker = ImagePicker();
   XFile? _image;
 
@@ -34,6 +39,20 @@ class _DetailNotePageState extends State<DetailNotePage> {
   getImageCamera() async {
     _image = await _imagePicker.pickImage(source: ImageSource.camera);
     setState(() {});
+  }
+
+  saveNote() {
+    NoteModel noteModel = NoteModel(
+      title: "Ejemplo 1",
+      date: "2022-01-01",
+      time: "12:09 PM",
+      image: "https://images.pexels.com/photos/8356403/pexels-photo-8356403.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+    );
+
+    _noteReference.add(noteModel.toJson()).then((value) {
+      print(value);
+    });
   }
 
   @override
@@ -121,7 +140,7 @@ class _DetailNotePageState extends State<DetailNotePage> {
                             _image!.path,
                           ),
                         )
-                      : AssetImage(
+                      : const AssetImage(
                           "assets/images/placeholder.jpg",
                         ) as ImageProvider,
                   width: double.infinity,
@@ -134,7 +153,9 @@ class _DetailNotePageState extends State<DetailNotePage> {
               ),
               ButtonNormalWidget(
                 text: "Guardar",
-                onPressed: () {},
+                onPressed: () {
+                  saveNote();
+                },
               ),
             ],
           ),
