@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/models/note_model.dart';
 import 'package:notes/pages/detail_note_page.dart';
+import 'package:notes/ui/general/colors.dart';
 import 'package:notes/ui/widgets/item_list_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     // });
 
     return Scaffold(
-      backgroundColor: const Color(0xffF9FDFF),
+      backgroundColor: kBackgroundPrimaryColor,
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailNotePage())).then((value){
@@ -87,12 +88,6 @@ class _HomePageState extends State<HomePage> {
                       QuerySnapshot collection = snap.data;
                       List<QueryDocumentSnapshot> docs = collection.docs;
                       List<NoteModel> notes = docs.map((e){
-
-                        print(e);
-                        print(e.id);
-                        print(e.data());
-                        print(e.data() as Map<String, dynamic>);
-
                         NoteModel noteModel = NoteModel.fromJson(e.data() as Map<String, dynamic>);
                         noteModel.id  = e.id;
                         return noteModel;
@@ -108,7 +103,9 @@ class _HomePageState extends State<HomePage> {
                         },
                       );
                     }
-                    return Text("Hola");
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   },
                 ),
 

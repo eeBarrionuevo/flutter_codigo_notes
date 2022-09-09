@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:notes/models/note_model.dart';
+import 'package:notes/ui/general/colors.dart';
 
 class ItemListWidget extends StatelessWidget {
 
@@ -34,7 +35,7 @@ class ItemListWidget extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                backgroundColor: Colors.indigo,
+                backgroundColor: kFontPrimaryColor,
                 child: Icon(
                   Icons.notifications_none,
                   color: Colors.white,
@@ -53,7 +54,7 @@ class ItemListWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Color(0xff323334).withOpacity(0.90),
+                        color: kFontPrimaryColor.withOpacity(0.90),
                       ),
                     ),
                     const SizedBox(
@@ -63,7 +64,7 @@ class ItemListWidget extends StatelessWidget {
                       "${noteModel.date}, ${noteModel.time}",
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
-                        color: Color(0xff323334).withOpacity(0.85),
+                        color: kFontPrimaryColor.withOpacity(0.85),
                       ),
                     ),
                   ],
@@ -74,7 +75,7 @@ class ItemListWidget extends StatelessWidget {
           const SizedBox(
             height: 6.0,
           ),
-          Divider(
+          const Divider(
             indent: 12.0,
             endIndent: 12.0,
           ),
@@ -100,7 +101,7 @@ class ItemListWidget extends StatelessWidget {
             style: TextStyle(
               height: 1.5,
               fontWeight: FontWeight.normal,
-              color: Color(0xff323334).withOpacity(0.90),
+              color: kFontPrimaryColor.withOpacity(0.90),
             ),
           ),
         ],
