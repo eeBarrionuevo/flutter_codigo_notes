@@ -16,8 +16,8 @@ class DetailNotePage extends StatefulWidget {
 }
 
 class _DetailNotePageState extends State<DetailNotePage> {
-
-  final firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStorage.instance;
+  final firebase_storage.FirebaseStorage _storage =
+      firebase_storage.FirebaseStorage.instance;
 
   final CollectionReference _noteReference =
       FirebaseFirestore.instance.collection("notes");
@@ -46,33 +46,33 @@ class _DetailNotePageState extends State<DetailNotePage> {
   }
 
   saveNote() {
-
     final DateTime now = DateTime.now();
     final DateFormat formatterDate = DateFormat('yyyy-MM-dd');
     final DateFormat formatterTime = DateFormat('hh:mm a');
     final String formattedDate = formatterDate.format(now);
     final String formattedTime = formatterTime.format(now);
 
-    NoteModel noteModel = NoteModel(
-      title: "Ejemplo 3",
-      date: formattedDate,
-      time: formattedTime,
-      image: "https://images.pexels.com/photos/8356403/pexels-photo-8356403.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-    );
-    _noteReference.add(noteModel.toJson()).then((value) {
-      print(value);
-    });
-
+    uploadImage();
+    // NoteModel noteModel = NoteModel(
+    //   title: "Ejemplo 3",
+    //   date: formattedDate,
+    //   time: formattedTime,
+    //   image: "https://images.pexels.com/photos/8356403/pexels-photo-8356403.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    //   description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+    // );
+    // _noteReference.add(noteModel.toJson()).then((value) {
+    //   print(value);
+    // });
   }
 
-
-  uploadImage(){
-
+  Future<String> uploadImage() async {
+    firebase_storage.Reference _reference = _storage.ref().child("images");
+    String nameImage = DateTime.now().toString();
+    firebase_storage.TaskSnapshot uploadTask =
+        await _reference.child("$nameImage.jpg").putFile(File(_image!.path));
+    String url = await uploadTask.ref.getDownloadURL();
+    return url;
   }
-
-
-
 
   @override
   void dispose() {
