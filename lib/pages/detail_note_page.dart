@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,7 +13,6 @@ class DetailNotePage extends StatefulWidget {
 }
 
 class _DetailNotePageState extends State<DetailNotePage> {
-
   final ImagePicker _imagePicker = ImagePicker();
   XFile? _image;
 
@@ -27,19 +28,13 @@ class _DetailNotePageState extends State<DetailNotePage> {
 
   getImageGallery() async {
     _image = await _imagePicker.pickImage(source: ImageSource.gallery);
-    setState((){});
+    setState(() {});
   }
 
   getImageCamera() async {
     _image = await _imagePicker.pickImage(source: ImageSource.camera);
-    setState((){});
+    setState(() {});
   }
-
-
-
-
-
-
 
   @override
   void dispose() {
@@ -89,11 +84,10 @@ class _DetailNotePageState extends State<DetailNotePage> {
                         getImageGallery();
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.pinkAccent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14.0),
-                        )
-                      ),
+                          primary: Colors.pinkAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14.0),
+                          )),
                       child: const Text("Galería"),
                     ),
                   ),
@@ -109,8 +103,7 @@ class _DetailNotePageState extends State<DetailNotePage> {
                           primary: Colors.amber,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14.0),
-                          )
-                      ),
+                          )),
                       child: const Text("Cámara"),
                     ),
                   ),
@@ -122,9 +115,18 @@ class _DetailNotePageState extends State<DetailNotePage> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(14.0),
                 child: Image(
-                  image: AssetImage("assets/images/placeholder.jpg"),
+                  image: _image != null
+                      ? FileImage(
+                          File(
+                            _image!.path,
+                          ),
+                        )
+                      : AssetImage(
+                          "assets/images/placeholder.jpg",
+                        ) as ImageProvider,
                   width: double.infinity,
                   height: 200,
+                  fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(
