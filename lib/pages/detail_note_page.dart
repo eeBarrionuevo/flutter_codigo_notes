@@ -22,6 +22,9 @@ class _DetailNotePageState extends State<DetailNotePage> {
   final CollectionReference _noteReference =
       FirebaseFirestore.instance.collection("notes");
 
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
   final ImagePicker _imagePicker = ImagePicker();
   XFile? _image;
 
@@ -55,12 +58,11 @@ class _DetailNotePageState extends State<DetailNotePage> {
     if (_image != null) {
       String urlImage = await uploadImage();
       NoteModel noteModel = NoteModel(
-        title: "Ejemplo 4",
+        title: _titleController.text,
         date: formattedDate,
         time: formattedTime,
         image: urlImage,
-        description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+        description: _descriptionController.text,
       );
       _noteReference.add(noteModel.toJson()).then((value) {
         print(value);
@@ -104,9 +106,11 @@ class _DetailNotePageState extends State<DetailNotePage> {
             children: [
               TextFieldNormalWidget(
                 hintText: "Título",
+                controller: _titleController,
               ),
               TextFieldNormalWidget(
                 hintText: "Descripción",
+                controller: _descriptionController,
               ),
               const Divider(
                 indent: 12.0,

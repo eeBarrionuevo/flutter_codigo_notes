@@ -4,9 +4,11 @@ import 'package:notes/ui/general/colors.dart';
 class TextFieldNormalWidget extends StatelessWidget {
 
   String hintText;
+  TextEditingController controller;
 
   TextFieldNormalWidget({
     required this.hintText,
+    required this.controller,
   });
 
   @override
@@ -33,6 +35,7 @@ class TextFieldNormalWidget extends StatelessWidget {
               ],
             ),
             child: TextField(
+              controller: controller,
               decoration: InputDecoration(
                 hintText: hintText,
                 hintStyle: TextStyle(
