@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:notes/models/note_model.dart';
 import 'package:notes/ui/general/colors.dart';
 
@@ -9,8 +10,11 @@ class ItemListWidget extends StatelessWidget {
   NoteModel noteModel;
   ItemListWidget({required this.noteModel});
 
+  final DateFormat formatterDate = DateFormat('dd-MMM-y');
+
   @override
   Widget build(BuildContext context) {
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 12.0),
       margin: const EdgeInsets.symmetric(vertical: 12.0),
@@ -61,7 +65,7 @@ class ItemListWidget extends StatelessWidget {
                       height: 4.0,
                     ),
                     Text(
-                      "${noteModel.date}, ${noteModel.time}",
+                      "${formatterDate.format(DateTime.parse(noteModel.date))}, ${noteModel.time}",
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         color: kFontPrimaryColor.withOpacity(0.85),
