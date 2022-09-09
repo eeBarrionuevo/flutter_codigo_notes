@@ -10,7 +10,7 @@ class ItemListWidget extends StatelessWidget {
   NoteModel noteModel;
   ItemListWidget({required this.noteModel});
 
-  final DateFormat formatterDate = DateFormat('dd-MMM-y');
+  final DateFormat formatterDate = DateFormat('dd MMM y');
 
   @override
   Widget build(BuildContext context) {
