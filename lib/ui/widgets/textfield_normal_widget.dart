@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notes/ui/general/colors.dart';
 
 class TextFieldNormalWidget extends StatelessWidget {
+
   String hintText;
 
   TextFieldNormalWidget({

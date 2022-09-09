@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notes/ui/general/colors.dart';
+import 'package:notes/ui/widgets/button_normal_widget.dart';
 import 'package:notes/ui/widgets/textfield_normal_widget.dart';
 
 class DetailNotePage extends StatefulWidget {
@@ -48,6 +49,10 @@ class _DetailNotePageState extends State<DetailNotePage> {
               ),
               TextFieldNormalWidget(
                 hintText: "Descripción",
+              ),
+              ButtonNormalWidget(
+                text: "Guardar",
+                onPressed: () {},
               ),
             ],
           ),
