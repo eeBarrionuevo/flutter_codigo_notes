@@ -50,6 +50,27 @@ class _DetailNotePageState extends State<DetailNotePage> {
               TextFieldNormalWidget(
                 hintText: "Descripción",
               ),
+              const Divider(
+                indent: 12.0,
+                endIndent: 12.0,
+              ),
+              const Text(
+                "Selecciona una imagen",
+              ),
+              const SizedBox(
+                height: 12.0,
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(14.0),
+                child: Image(
+                  image: AssetImage("assets/images/placeholder.jpg"),
+                  width: double.infinity,
+                  height: 200,
+                ),
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
               ButtonNormalWidget(
                 text: "Guardar",
                 onPressed: () {},

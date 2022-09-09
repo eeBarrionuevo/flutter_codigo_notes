@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: kBackgroundPrimaryColor,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.indigo,
         onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailNotePage())).then((value){
             // setState((){});
