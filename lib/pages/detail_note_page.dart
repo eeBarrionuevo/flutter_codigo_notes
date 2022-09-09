@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,17 +42,26 @@ class _DetailNotePageState extends State<DetailNotePage> {
   }
 
   saveNote() {
-    NoteModel noteModel = NoteModel(
-      title: "Ejemplo 1",
-      date: "2022-01-01",
-      time: "12:09 PM",
-      image: "https://images.pexels.com/photos/8356403/pexels-photo-8356403.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-    );
 
-    _noteReference.add(noteModel.toJson()).then((value) {
-      print(value);
-    });
+    final DateTime now = DateTime.now();
+    final DateFormat formatterDate = DateFormat('yyyy-MM-dd');
+    final DateFormat formatterTime = DateFormat('hh:mm a');
+    final String formattedDate = formatterDate.format(now);
+    final String formattedTime = formatterTime.format(now);
+    print(formattedDate); // something like 2013
+    print(formattedTime); // something like 2013
+
+    // NoteModel noteModel = NoteModel(
+    //   title: "Ejemplo 1",
+    //   date: "2022-01-01",
+    //   time: "12:09 PM",
+    //   image: "https://images.pexels.com/photos/8356403/pexels-photo-8356403.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    //   description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+    // );
+    //
+    // _noteReference.add(noteModel.toJson()).then((value) {
+    //   print(value);
+    // });
   }
 
   @override
