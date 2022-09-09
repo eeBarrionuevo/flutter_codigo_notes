@@ -41,6 +41,9 @@ dependencies:
   intl: ^0.17.0
   firebase_storage: ^10.3.8
 
+  flutter_localizations: # Add this line
+    sdk: flutter         # Add this line
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
