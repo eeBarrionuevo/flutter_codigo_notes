@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:notes/ui/general/colors.dart';
 import 'package:notes/ui/widgets/button_normal_widget.dart';
 import 'package:notes/ui/widgets/textfield_normal_widget.dart';
@@ -10,6 +11,10 @@ class DetailNotePage extends StatefulWidget {
 }
 
 class _DetailNotePageState extends State<DetailNotePage> {
+
+  final ImagePicker _imagePicker = ImagePicker();
+  XFile? _image;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -19,6 +24,22 @@ class _DetailNotePageState extends State<DetailNotePage> {
     //   [DeviceOrientation.landscapeLeft],
     // );
   }
+
+  getImageGallery() async {
+    _image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    setState((){});
+  }
+
+  getImageCamera() async {
+    _image = await _imagePicker.pickImage(source: ImageSource.camera);
+    setState((){});
+  }
+
+
+
+
+
+
 
   @override
   void dispose() {
@@ -59,6 +80,44 @@ class _DetailNotePageState extends State<DetailNotePage> {
               ),
               const SizedBox(
                 height: 12.0,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        getImageGallery();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pinkAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14.0),
+                        )
+                      ),
+                      child: const Text("Galería"),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 12.0,
+                  ),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        getImageCamera();
+                      },
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.amber,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14.0),
+                          )
+                      ),
+                      child: const Text("Cámara"),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 16.0,
               ),
               ClipRRect(
                 borderRadius: BorderRadius.circular(14.0),
