@@ -45,24 +45,28 @@ class _DetailNotePageState extends State<DetailNotePage> {
     setState(() {});
   }
 
-  saveNote() {
+  saveNote() async {
     final DateTime now = DateTime.now();
     final DateFormat formatterDate = DateFormat('yyyy-MM-dd');
     final DateFormat formatterTime = DateFormat('hh:mm a');
     final String formattedDate = formatterDate.format(now);
     final String formattedTime = formatterTime.format(now);
 
-    uploadImage();
-    // NoteModel noteModel = NoteModel(
-    //   title: "Ejemplo 3",
-    //   date: formattedDate,
-    //   time: formattedTime,
-    //   image: "https://images.pexels.com/photos/8356403/pexels-photo-8356403.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    //   description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
-    // );
-    // _noteReference.add(noteModel.toJson()).then((value) {
-    //   print(value);
-    // });
+    if (_image != null) {
+      String urlImage = await uploadImage();
+      NoteModel noteModel = NoteModel(
+        title: "Ejemplo 4",
+        date: formattedDate,
+        time: formattedTime,
+        image: urlImage,
+        description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
+      );
+      _noteReference.add(noteModel.toJson()).then((value) {
+        print(value);
+      });
+    }
+
   }
 
   Future<String> uploadImage() async {
