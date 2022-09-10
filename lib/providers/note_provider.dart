@@ -1,13 +1,17 @@
 
 import 'package:flutter/material.dart';
+import 'package:notes/models/note_model.dart';
 
 class NoteProvider extends ChangeNotifier{
 
-  int numberNote = 100;
+  List<NoteModel> _noteList = [];
 
-  setNumberNote(int value){
-    numberNote = value;
+  List<NoteModel> get notes => _noteList;
+
+  void initNoteList(List<NoteModel> value){
+    _noteList = value;
     notifyListeners();
   }
+
 
 }

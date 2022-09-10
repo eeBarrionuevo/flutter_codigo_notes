@@ -195,7 +195,7 @@ class _DetailNotePageState extends State<DetailNotePage> {
               ButtonNormalWidget(
                 text: "Provider",
                 onPressed: () {
-                  noteProvider.setNumberNote(400);
+
                 },
               ),
             ],

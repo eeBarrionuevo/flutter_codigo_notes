@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
     NoteProvider noteProvider = Provider.of<NoteProvider>(context);
     Orientation orientation = MediaQuery.of(context).orientation;
 
-    print("wwwwwwwwww ${noteProvider.numberNote}");
 
     return Scaffold(
       backgroundColor: kBackgroundPrimaryColor,
@@ -58,35 +57,17 @@ class _HomePageState extends State<HomePage> {
                   height: 14.0,
                 ),
 
-                // FutureBuilder(
-                //   future: _notesReference.get(),
-                //   builder: (BuildContext context, AsyncSnapshot snap){
-                //     if(snap.hasData){
-                //       QuerySnapshot collection = snap.data;
-                //       return ListView.builder(
-                //         shrinkWrap: true,
-                //         physics: const ScrollPhysics(),
-                //         itemCount: collection.docs.length,
-                //         itemBuilder: (context, index){
-                //           return ItemListWidget();
-                //         },
-                //       );
-                //     }
-                //     return Text("Hola");
-                //   },
-                // ),
-
-                StreamBuilder(
-                  stream: _notesReference.orderBy('date', descending: true).snapshots(),
+                FutureBuilder(
+                  future: _notesReference.get(),
                   builder: (BuildContext context, AsyncSnapshot snap){
                     if(snap.hasData){
                       QuerySnapshot collection = snap.data;
-                      List<QueryDocumentSnapshot> docs = collection.docs;
-                      List<NoteModel> notes = docs.map((e){
-                        NoteModel noteModel = NoteModel.fromJson(e.data() as Map<String, dynamic>);
-                        noteModel.id  = e.id;
-                        return noteModel;
-                      }).toList();
+                            List<QueryDocumentSnapshot> docs = collection.docs;
+                            List<NoteModel> notes = docs.map((e){
+                              NoteModel noteModel = NoteModel.fromJson(e.data() as Map<String, dynamic>);
+                              noteModel.id  = e.id;
+                              return noteModel;
+                            }).toList();
                       return ListView.builder(
                         shrinkWrap: true,
                         physics: const ScrollPhysics(),
@@ -98,11 +79,37 @@ class _HomePageState extends State<HomePage> {
                         },
                       );
                     }
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return Text("Hola");
                   },
                 ),
+
+                // StreamBuilder(
+                //   stream: _notesReference.orderBy('date', descending: true).snapshots(),
+                //   builder: (BuildContext context, AsyncSnapshot snap){
+                //     if(snap.hasData){
+                //       QuerySnapshot collection = snap.data;
+                //       List<QueryDocumentSnapshot> docs = collection.docs;
+                //       List<NoteModel> notes = docs.map((e){
+                //         NoteModel noteModel = NoteModel.fromJson(e.data() as Map<String, dynamic>);
+                //         noteModel.id  = e.id;
+                //         return noteModel;
+                //       }).toList();
+                //       return ListView.builder(
+                //         shrinkWrap: true,
+                //         physics: const ScrollPhysics(),
+                //         itemCount: notes.length,
+                //         itemBuilder: (context, index){
+                //           return ItemListWidget(
+                //             noteModel: notes[index],
+                //           );
+                //         },
+                //       );
+                //     }
+                //     return const Center(
+                //       child: CircularProgressIndicator(),
+                //     );
+                //   },
+                // ),
 
 
               ],
