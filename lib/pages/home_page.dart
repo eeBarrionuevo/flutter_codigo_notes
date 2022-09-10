@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/models/note_model.dart';
 import 'package:notes/pages/detail_note_page.dart';
+import 'package:notes/providers/note_provider.dart';
 import 'package:notes/ui/general/colors.dart';
 import 'package:notes/ui/widgets/item_list_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,8 +21,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
+    NoteProvider noteProvider = Provider.of<NoteProvider>(context);
     Orientation orientation = MediaQuery.of(context).orientation;
+
+    print("wwwwwwwwww ${noteProvider.numberNote}");
 
     return Scaffold(
       backgroundColor: kBackgroundPrimaryColor,
@@ -73,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                 // ),
 
                 StreamBuilder(
-                  stream: _notesReference.snapshots(),
+                  stream: _notesReference.orderBy('date', descending: true).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot snap){
                     if(snap.hasData){
                       QuerySnapshot collection = snap.data;

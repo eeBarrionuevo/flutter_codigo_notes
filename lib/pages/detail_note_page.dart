@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:notes/models/note_model.dart';
+import 'package:notes/providers/note_provider.dart';
 import 'package:notes/ui/general/colors.dart';
 import 'package:notes/ui/widgets/button_normal_widget.dart';
 import 'package:notes/ui/widgets/textfield_normal_widget.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:provider/provider.dart';
 
 class DetailNotePage extends StatefulWidget {
   @override
@@ -92,6 +94,9 @@ class _DetailNotePageState extends State<DetailNotePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    NoteProvider noteProvider = Provider.of<NoteProvider>(context);
+
     print("BUILD");
     return Scaffold(
       backgroundColor: kBackgroundPrimaryColor,
@@ -182,6 +187,15 @@ class _DetailNotePageState extends State<DetailNotePage> {
                 text: "Guardar",
                 onPressed: () {
                   saveNote();
+                },
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              ButtonNormalWidget(
+                text: "Provider",
+                onPressed: () {
+                  noteProvider.setNumberNote(400);
                 },
               ),
             ],
