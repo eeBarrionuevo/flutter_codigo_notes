@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notes/pages/home_page.dart';
 import 'package:notes/ui/general/colors.dart';
 import 'package:notes/ui/widgets/button_normal_widget.dart';
@@ -14,6 +15,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
   final CollectionReference _userReference =
       FirebaseFirestore.instance.collection('users');
 
@@ -40,44 +44,80 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _login() async {
-    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailController.text,
       password: _passwordController.text,
     );
 
-    if(userCredential.user != null){
+    if (userCredential.user != null) {
       // print(userCredential.user!.email);
-      Map<String, dynamic> userData =  await getUser(userCredential.user!.email!);
-      if(userData["role"] == "admin"){
+      Map<String, dynamic> userData =
+          await getUser(userCredential.user!.email!);
+      if (userData["role"] == "admin") {
         //Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage()), (route) => false);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (route) => false);
         //Navigator.pushNamed(context, '/home');
         //Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
 
-
-      }else if(userData["role"] == "user"){
-
-      }else{
-
-      }
+      } else if (userData["role"] == "user") {
+      } else {}
     }
-
   }
 
-  Future<Map<String, dynamic>> getUser(String email) async{
-    QuerySnapshot collection = await _userReference.where("email", isEqualTo: email).get();
+  Future<Map<String, dynamic>> getUser(String email) async {
+    QuerySnapshot collection =
+        await _userReference.where("email", isEqualTo: email).get();
     QueryDocumentSnapshot doc = collection.docs.first;
     Map<String, dynamic> userMap = doc.data() as Map<String, dynamic>;
     return userMap;
   }
 
+  showNotification() async {
 
+    AndroidInitializationSettings androidInitializationSettings = const AndroidInitializationSettings("@mipmap/ic_launcher");
+
+
+    IOSInitializationSettings iosInitializationSettings = const IOSInitializationSettings(
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
+      defaultPresentSound: true,
+      defaultPresentBadge: true,
+      defaultPresentAlert: true
+    );
+
+    InitializationSettings initializationSettings = InitializationSettings(
+      android: androidInitializationSettings,
+      iOS: iosInitializationSettings,
+    );
+
+    await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    _flutterLocalNotificationsPlugin.show(
+      0,
+      "Hola desde Flutter",
+      "Esta es una notificación",
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          "Canal Note App ID",
+          "Canal Note App",
+          enableVibration: true,
+          priority: Priority.max,
+          importance: Importance.max,
+        ),
+        iOS: IOSNotificationDetails(
+          threadIdentifier: "Canal Note App ID"
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return Scaffold(
       backgroundColor: kBackgroundPrimaryColor,
       body: SingleChildScrollView(
@@ -127,6 +167,15 @@ class _LoginPageState extends State<LoginPage> {
                     //Navigator.pop(context);
                     Navigator.maybePop(context);
                     print(Navigator.canPop(context));
+                  },
+                ),
+                const SizedBox(
+                  height: 30.0,
+                ),
+                ButtonNormalWidget(
+                  text: "Show Notification",
+                  onPressed: () {
+                    showNotification();
                   },
                 ),
               ],
