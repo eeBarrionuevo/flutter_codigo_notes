@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notes/models/note_model.dart';
 import 'package:notes/pages/detail_note_page.dart';
 import 'package:notes/providers/note_provider.dart';
+import 'package:notes/services/my_firestore_service.dart';
 import 'package:notes/ui/general/colors.dart';
 import 'package:notes/ui/widgets/item_list_widget.dart';
 import 'package:provider/provider.dart';
@@ -16,14 +17,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  final CollectionReference _notesReference = FirebaseFirestore.instance.collection('notes');
+  // final CollectionReference _notesReference = FirebaseFirestore.instance.collection('notes');
+  //
+  MyFirestoreService noteService = MyFirestoreService(collectionName: "notes");
 
 
   @override
   Widget build(BuildContext context) {
     NoteProvider noteProvider = Provider.of<NoteProvider>(context);
     Orientation orientation = MediaQuery.of(context).orientation;
-
 
     return Scaffold(
       backgroundColor: kBackgroundPrimaryColor,
@@ -58,16 +60,17 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 FutureBuilder(
-                  future: _notesReference.get(),
+                  future: noteService.getNotes(),
                   builder: (BuildContext context, AsyncSnapshot snap){
                     if(snap.hasData){
-                      QuerySnapshot collection = snap.data;
-                            List<QueryDocumentSnapshot> docs = collection.docs;
-                            List<NoteModel> notes = docs.map((e){
-                              NoteModel noteModel = NoteModel.fromJson(e.data() as Map<String, dynamic>);
-                              noteModel.id  = e.id;
-                              return noteModel;
-                            }).toList();
+                      List<NoteModel> notes = snap.data;
+                      // QuerySnapshot collection = snap.data;
+                      //       List<QueryDocumentSnapshot> docs = collection.docs;
+                      //       List<NoteModel> notes = docs.map((e){
+                      //         NoteModel noteModel = NoteModel.fromJson(e.data() as Map<String, dynamic>);
+                      //         noteModel.id  = e.id;
+                      //         return noteModel;
+                      //       }).toList();
                       return ListView.builder(
                         shrinkWrap: true,
                         physics: const ScrollPhysics(),
