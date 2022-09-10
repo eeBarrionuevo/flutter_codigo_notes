@@ -15,20 +15,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  late NoteProvider noteProvider;
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    noteProvider = Provider.of<NoteProvider>(context, listen: false);
-    noteProvider.setNoteList();
+    Provider.of<NoteProvider>(context, listen: false).setNoteList();
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final _noteProvider = Provider.of<NoteProvider>(context, listen: true);
+    NoteProvider _noteProviderx = Provider.of<NoteProvider>(context, listen: true);
 
     return Scaffold(
       backgroundColor: kBackgroundPrimaryColor,
@@ -67,10 +66,10 @@ class _HomePageState extends State<HomePage> {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const ScrollPhysics(),
-                  itemCount: _noteProvider.notes.length,
+                  itemCount: _noteProviderx.notes.length,
                   itemBuilder: (context, index) {
                     return ItemListWidget(
-                      noteModel: _noteProvider.notes[index],
+                      noteModel: _noteProviderx.notes[index],
                     );
                   },
                 ),

@@ -68,6 +68,8 @@ class _DetailNotePageState extends State<DetailNotePage> {
       );
       _noteReference.add(noteModel.toJson()).then((value) {
         print(value);
+        final noteProvider = Provider.of<NoteProvider>(context);
+        noteProvider.setNoteList();
       });
     }
 
