@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/models/note_model.dart';
 import 'package:notes/pages/detail_note_page.dart';
 import 'package:notes/providers/note_provider.dart';
-import 'package:notes/services/my_firestore_service.dart';
 import 'package:notes/ui/general/colors.dart';
 import 'package:notes/ui/widgets/item_list_widget.dart';
 import 'package:provider/provider.dart';
@@ -17,22 +15,29 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  // final CollectionReference _notesReference = FirebaseFirestore.instance.collection('notes');
-  //
-  MyFirestoreService noteService = MyFirestoreService(collectionName: "notes");
+  late NoteProvider noteProvider;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    noteProvider = Provider.of<NoteProvider>(context, listen: false);
+    noteProvider.setNoteList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    NoteProvider noteProvider = Provider.of<NoteProvider>(context);
-    Orientation orientation = MediaQuery.of(context).orientation;
+
+    final _noteProvider = Provider.of<NoteProvider>(context, listen: true);
 
     return Scaffold(
       backgroundColor: kBackgroundPrimaryColor,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.indigo,
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailNotePage())).then((value){
+        onPressed: () {
+          Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DetailNotePage()))
+              .then((value) {
             // setState((){});
           });
         },
@@ -59,30 +64,14 @@ class _HomePageState extends State<HomePage> {
                   height: 14.0,
                 ),
 
-                FutureBuilder(
-                  future: noteService.getNotes(),
-                  builder: (BuildContext context, AsyncSnapshot snap){
-                    if(snap.hasData){
-                      List<NoteModel> notes = snap.data;
-                      // QuerySnapshot collection = snap.data;
-                      //       List<QueryDocumentSnapshot> docs = collection.docs;
-                      //       List<NoteModel> notes = docs.map((e){
-                      //         NoteModel noteModel = NoteModel.fromJson(e.data() as Map<String, dynamic>);
-                      //         noteModel.id  = e.id;
-                      //         return noteModel;
-                      //       }).toList();
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const ScrollPhysics(),
-                        itemCount: notes.length,
-                        itemBuilder: (context, index){
-                          return ItemListWidget(
-                            noteModel: notes[index],
-                          );
-                        },
-                      );
-                    }
-                    return Text("Hola");
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ScrollPhysics(),
+                  itemCount: _noteProvider.notes.length,
+                  itemBuilder: (context, index) {
+                    return ItemListWidget(
+                      noteModel: _noteProvider.notes[index],
+                    );
                   },
                 ),
 
@@ -113,8 +102,6 @@ class _HomePageState extends State<HomePage> {
                 //     );
                 //   },
                 // ),
-
-
               ],
             ),
           ),
