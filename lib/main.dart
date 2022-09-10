@@ -11,8 +11,8 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await PushNotificationsHelper.initApp();
   await Firebase.initializeApp();
+  await PushNotificationsHelper.initApp();
   // SystemChrome.setPreferredOrientations(
   //   [
   //     DeviceOrientation.portraitUp

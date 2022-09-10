@@ -9,6 +9,19 @@ class PushNotificationsHelper {
   static initApp() async{
     String token = await messaging.getToken() ?? "";
     print(token);
+    FirebaseMessaging.onMessage.listen(_onMessage);
+
   }
+
+  static Future _onMessage(RemoteMessage message) async{
+    if(message.notification != null){
+      print(message.notification!.title);
+      print(message.notification!.body);
+    }
+  }
+
+
+
+
 
 }
