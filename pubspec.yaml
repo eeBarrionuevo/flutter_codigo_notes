@@ -42,6 +42,7 @@ dependencies:
   firebase_storage: ^10.3.8
   firebase_auth: ^3.8.0
   provider: ^6.0.3
+  firebase_messaging: ^13.0.1
 
   flutter_localizations: # Add this line
     sdk: flutter         # Add this line

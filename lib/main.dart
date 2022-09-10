@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notes/helpers/push_notifications_helper.dart';
 import 'package:notes/pages/detail_note_page.dart';
 import 'package:notes/pages/home_page.dart';
 import 'package:notes/pages/login_page.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await PushNotificationsHelper.initApp();
   await Firebase.initializeApp();
   // SystemChrome.setPreferredOrientations(
   //   [
