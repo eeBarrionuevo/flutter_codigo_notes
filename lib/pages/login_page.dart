@@ -49,8 +49,12 @@ class _LoginPageState extends State<LoginPage> {
       // print(userCredential.user!.email);
       Map<String, dynamic> userData =  await getUser(userCredential.user!.email!);
       if(userData["role"] == "admin"){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-        // Navigator.pushNamed(context, routeName);
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> HomePage()), (route) => false);
+        //Navigator.pushNamed(context, '/home');
+        //Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+
+
       }else if(userData["role"] == "user"){
 
       }else{
@@ -119,7 +123,10 @@ class _LoginPageState extends State<LoginPage> {
                 ButtonNormalWidget(
                   text: "Registrar",
                   onPressed: () {
-                    _registerUser();
+                    // _registerUser();
+                    //Navigator.pop(context);
+                    Navigator.maybePop(context);
+                    print(Navigator.canPop(context));
                   },
                 ),
               ],

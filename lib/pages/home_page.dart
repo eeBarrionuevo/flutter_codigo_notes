@@ -22,16 +22,6 @@ class _HomePageState extends State<HomePage> {
 
     Orientation orientation = MediaQuery.of(context).orientation;
 
-    // _notesReference.get().then((QuerySnapshot value){
-    //   QuerySnapshot collection = value;
-    //   print(collection.size);
-    //   print(collection.docs);
-    // });
-    //
-    // _notesReference.snapshots().listen((event) {
-    //   print("wwwwwwwwwwww ${event.size}");
-    // });
-
     return Scaffold(
       backgroundColor: kBackgroundPrimaryColor,
       floatingActionButton: FloatingActionButton(
