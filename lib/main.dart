@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:notes/pages/detail_note_page.dart';
 import 'package:notes/pages/home_page.dart';
 import 'package:notes/pages/login_page.dart';
 
@@ -34,6 +35,13 @@ class MyApp extends StatelessWidget {
        //Locale('en', ''), // English, no country code
         Locale('es', ''), // Spanish, no country code
       ],
+
+      routes: {
+        "/home": (BuildContext context)=> HomePage(),
+        "/detail": (BuildContext context)=> DetailNotePage(),
+        "/login": (BuildContext context)=> LoginPage(),
+      },
+
       home: LoginPage(),
     );
   }

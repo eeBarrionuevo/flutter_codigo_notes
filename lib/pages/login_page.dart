@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notes/pages/home_page.dart';
 import 'package:notes/ui/general/colors.dart';
 import 'package:notes/ui/widgets/button_normal_widget.dart';
 import 'package:notes/ui/widgets/textfield_normal_widget.dart';
@@ -48,7 +49,8 @@ class _LoginPageState extends State<LoginPage> {
       // print(userCredential.user!.email);
       Map<String, dynamic> userData =  await getUser(userCredential.user!.email!);
       if(userData["role"] == "admin"){
-
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+        // Navigator.pushNamed(context, routeName);
       }else if(userData["role"] == "user"){
 
       }else{
